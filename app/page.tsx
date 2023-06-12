@@ -1,112 +1,79 @@
-import Image from 'next/image'
+"use client"
+
+import { MouseEvent, useState } from "react";
+import { CalculatorButton } from "./components/CalculatorButton";
 
 export default function Home() {
+  
+  const [ result, setResult ] = useState("");
+
+  function handleClick(event: MouseEvent<HTMLButtonElement>){
+    setResult(result.concat(event.currentTarget.id))
+  }
+  function clear(){
+    setResult("");
+  }
+  function deleteEl(){
+    setResult(result.slice(0, -1));
+  }
+
+  function calculate(){
+    try {
+      setResult(eval(result).toString())
+    } catch (err){
+      setResult("Error!")
+    }
+  }
+  // before:content-[''] before:absolute before:top-0 before:left-[50px]
+  //     before:h-[80px] before:w-[50px] before:rounded-t-[50px] 
+  //     before:rounded-r-[50px]before:rounded-b-0 before:rounded-l-0 
+  //     before:bg-black before:-rotate-45 before:origin-[0_100%]
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="flex min-h-screen flex-col items-center justify-center gap-2 bg-neutral-900">
+      <div className="calculator bg-neutral-900 w-80 mx-auto mt-10 p-4 rounded-lg shadow-lg relative z-10
+
+      before:content-[''] before:absolute before:top-0 before:left-[50px]
+      before:[h-50px] before:w-[50px]
+
+      
+      ">
+        
+        
+        <input type="text" value={result} disabled className="
+          w-full text-right py-4 px-5 text-2xl bg-neutral-900/80 text-white rounded-md
+        "/>
+
+        <div className="buttons grid grid-cols-4 gap-4 mt-4">
+
+          <CalculatorButton type="operator" label="AC" onClick={clear}/>
+          <CalculatorButton type="operator" label="DE" onClick={deleteEl}/>
+          <CalculatorButton id="." type="operator" label="." onClick={handleClick}/>
+          <CalculatorButton id="/" type="operator" label="/" onClick={handleClick}/>
+
+          <CalculatorButton id="7" type="number" label="7" onClick={handleClick}/>
+          <CalculatorButton id="8" type="number" label="8" onClick={handleClick}/>
+          <CalculatorButton id="9" type="number" label="9" onClick={handleClick}/>
+          
+          <CalculatorButton id="*" type="operator" label="*" onClick={handleClick}/>
+          
+          <CalculatorButton id="4" type="number" label="4" onClick={handleClick}/>
+          <CalculatorButton id="5" type="number" label="5" onClick={handleClick}/>
+          <CalculatorButton id="6" type="number" label="6" onClick={handleClick}/>
+          
+          <CalculatorButton id="-" type="operator" label="-" onClick={handleClick}/>
+        
+          <CalculatorButton id="1" type="number" label="1" onClick={handleClick}/>
+          <CalculatorButton id="2" type="number" label="2" onClick={handleClick}/>
+          <CalculatorButton id="3" type="number" label="3" onClick={handleClick}/>
+          
+          <CalculatorButton id="+" type="operator" label="+" className="row-span-2" onClick={handleClick}/>
+          
+          <CalculatorButton id="00" type="number" label="00" onClick={handleClick}/>
+          <CalculatorButton id="0" type="number" label="0" onClick={handleClick}/>
+          
+          <CalculatorButton id="=" type="operator" label="=" onClick={calculate}/>
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
       </div>
     </main>
   )
